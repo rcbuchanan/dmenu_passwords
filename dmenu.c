@@ -89,6 +89,8 @@ main(int argc, char *argv[]) {
 			topbar = False;
 		else if(!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
 			fast = True;
+		else if(!strcmp(argv[i], "-pw"))   /* grabs keyboard before reading stdin */
+			pwmode = True;
 		else if(!strcmp(argv[i], "-i")) { /* case-insensitive item matching */
 			fstrncmp = strncasecmp;
 			fstrstr = cistrstr;
@@ -201,7 +203,11 @@ drawmenu(void) {
 	int curpos;
 	Item *item;
 	int x = 0, y = 0, h = bh, w;
+	char starbuf[sizeof text];
 
+	memset(starbuf, '*', strlen(text));
+	starbuf[strlen(text)] = '\0';
+	
 	drw_setscheme(drw, &scheme[SchemeNorm]);
 	drw_rect(drw, 0, 0, mw, mh, True, 1, 1);
 
@@ -213,7 +219,7 @@ drawmenu(void) {
 	/* draw input field */
 	w = (lines > 0 || !matches) ? mw - x : inputw;
 	drw_setscheme(drw, &scheme[SchemeNorm]);
-	drw_text(drw, x, 0, w, bh, text, 0);
+	drw_text(drw, x, 0, w, bh, pwmode ? starbuf : text, 0);
 
 	if((curpos = TEXTNW(text, cursor) + bh/2 - 2) < w) {
 		drw_setscheme(drw, &scheme[SchemeNorm]);

@@ -4,6 +4,7 @@
 /* Default settings; can be overrided by command line. */
 
 static Bool topbar = True;                  /* -b  option; if False, dmenu appears at bottom */
+static int pwmode = False;
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
 	"monospace:size=10"
